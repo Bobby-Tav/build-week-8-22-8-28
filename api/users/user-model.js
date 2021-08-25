@@ -11,7 +11,7 @@ async function insertUser(user) {
   function getAll(){
     return db('users as u')
     .join('roles as r','u.role_id','r.role_id')
-    .select('user_id','username','password','role_name')
+    .select('user_id','username','role_name')
   }
 
   function getById(id){

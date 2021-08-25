@@ -6,7 +6,20 @@ const {usernameExists,validateInput,validateUsername}=require('./user-middleware
 const jwt =require('jsonwebtoken')
 const router=express.Router()
 
-//[Get]
+function tokenBuilder(user){
+    const payload={
+      subject:user.tokenBuilder,
+      username:user.username
+    }
+    const options = {
+      expiresIn: '1d'
+    }
+    return jwt.sign(payload,JWT_SECRET,options)
+  }
+
+  module.exports= router
+
+ //[Get]
 router.get('/', async (req, res, next) => {
      try{
         res.json(await User.getAll())
@@ -34,25 +47,13 @@ router.get('/', async (req, res, next) => {
           const token = tokenBuilder(req.user)
           res.json({
             message: `welcome,${req.user.username}`,
-            token: `${token}`
           })
+          console.log('words')
         }else{
           next({status:401, message:'Invalid credentials'}) 
+          console.log('no works')
         }
        }catch(err){
         next(err)
        }
     });
-
-function tokenBuilder(user){
-    const payload={
-      subject:user.tokenBuilder,
-      username:user.username
-    }
-    const options = {
-      expiresIn: '1d'
-    }
-    return jwt.sign(payload,JWT_SECRET,options)
-  }
-
-  module.exports= router
