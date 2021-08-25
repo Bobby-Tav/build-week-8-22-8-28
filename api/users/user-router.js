@@ -48,7 +48,7 @@ router.get('/', async (req, res, next) => {
           res.json({
             message: `welcome,${req.user.username}`,
           })
-          console.log('words')
+          console.log('works')
         }else{
           next({status:401, message:'Invalid credentials'}) 
           console.log('no works')
