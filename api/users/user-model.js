@@ -18,7 +18,7 @@ async function insertUser(user) {
     return db('users').where('id',id).first()
   }
   function getBy(filter) { // { username: "ladygaga" }
-    return db("users").where(filter).orderBy("id"); // []
+    return db("users").where(filter).orderBy("user_id"); // []
   }
    
 
