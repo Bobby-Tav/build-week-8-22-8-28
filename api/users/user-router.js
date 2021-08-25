@@ -2,7 +2,7 @@ const express = require('express')
 const User = require('./user-model')
 const bcrypt = require('bcrypt')
 const{JWT_SECRET}= require('./../../secret')
-const {usernameExists}=require('./user-middleware')
+const {usernameExists,validateInput,validateUsername}=require('./user-middleware')
 const jwt =require('jsonwebtoken')
 const router=express.Router()
 
@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
   })
 
   //[POST]Register
-  router.post('/register',async (req,res,next)=>{
+  router.post('/register',validateInput,validateUsername,async (req,res,next)=>{
       try{
           const {username,password,role_id} = req.body
           const hash = bcrypt.hashSync(password,8)
